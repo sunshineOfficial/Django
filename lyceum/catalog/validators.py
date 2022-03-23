@@ -2,7 +2,15 @@ from django.core.exceptions import ValidationError
 
 
 def validate_2_words(value):
-    if len(value.split()) < 2:
+    value = value.split()
+    k = 0
+    for el in value:
+        if not el.isdigit():
+            k += 1
+        if k == 2:
+            break
+
+    if k < 2:
         raise ValidationError('Минимум 2 слова')
 
 

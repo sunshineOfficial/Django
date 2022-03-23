@@ -17,7 +17,7 @@ class Rating(models.Model):
         (4, 'Обожание'),
         (5, 'Любовь')
     ]
-    star = models.PositiveSmallIntegerField('Звезды', help_text='От 1 до 5', choices=RATING_CHOICES, default=0, validators=[validators.MaxValueValidator(5)])
+    star = models.PositiveSmallIntegerField('Рейтинг', help_text='От 1 до 5', choices=RATING_CHOICES, default=0, validators=[validators.MaxValueValidator(5)])
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', null=True, verbose_name='Пользователь')
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='items', null=True, verbose_name='Товар')
 
@@ -29,4 +29,4 @@ class Rating(models.Model):
     
 
     def __str__(self):
-        return self.star
+        return self.get_star_display()
