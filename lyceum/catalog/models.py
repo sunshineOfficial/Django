@@ -41,7 +41,7 @@ class Item(PublishedBaseModel):
         blank=True,
         verbose_name="Категория",
     )
-    tags = models.ManyToManyField(Tag, related_name="tags", verbose_name="Теги")
+    tags = models.ManyToManyField(Tag, related_name="items", verbose_name="Теги")
 
     class Meta:
         verbose_name = "Товар"

@@ -25,14 +25,14 @@ class Rating(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="users",
+        related_name="rating",
         null=True,
         verbose_name="Пользователь",
     )
     item = models.ForeignKey(
         Item,
         on_delete=models.CASCADE,
-        related_name="items",
+        related_name="rating",
         null=True,
         verbose_name="Товар",
     )
