@@ -1,6 +1,6 @@
 from django.urls import path
 
-from lyceum.users import views
+from users import views
 
 urlpatterns = [
     path('users/<int:pk>/', views.user_detail),

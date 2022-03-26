@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from lyceum.rating.models import Rating
+from rating.models import Rating
 
 
 @admin.register(Rating)

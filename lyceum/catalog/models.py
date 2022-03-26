@@ -1,7 +1,7 @@
 from django.db import models
 
-from lyceum.catalog.validators import validate_2_words, validate_brilliant
-from lyceum.core.models import PublishedBaseModel, SlugBaseModel
+from catalog.validators import validate_2_words, validate_brilliant
+from core.models import PublishedBaseModel, SlugBaseModel
 
 
 class Category(PublishedBaseModel, SlugBaseModel):
