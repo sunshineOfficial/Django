@@ -13,13 +13,13 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('slug', 'is_published')
+    list_display = ('name', 'is_published')
     list_editable = ('is_published',)
-    list_display_links = ('slug',)
+    list_display_links = ('name',)
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('slug', 'is_published')
+    list_display = ('name', 'is_published')
     list_editable = ('is_published',)
-    list_display_links = ('slug',)
+    list_display_links = ('name',)

@@ -3,4 +3,8 @@
 {% block title %}Подробное описание товара{% endblock %}
 {% block content %}
   <h1>Подробное описание товара {{ pk }}</h1>
+  <h3>{{ item.name }}</h3>
+  <h4>{{ item.category.name }}</h4>
+  <p>{{ item.text }}</p>
+  <p>{{ item.tags.all|join:", " }}</p>
 {% endblock %}
