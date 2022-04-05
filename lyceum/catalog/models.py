@@ -7,8 +7,15 @@ from catalog.validators import validate_2_words, validate_brilliant
 from core.models import NameBaseModel, PublishedBaseModel, SlugBaseModel
 
 
+class CategoryManager(models.Manager):
+    def categories_and_items(self):
+        return self.get_queryset().filter(is_published=True).order_by('-weight').only('name').prefetch_related(
+            Prefetch('items', queryset=Item.objects.filter(is_published=True)))
+
+
 class Category(NameBaseModel, PublishedBaseModel, SlugBaseModel):
     weight = models.PositiveSmallIntegerField('Вес', default=100)
+    objects = CategoryManager()
 
     class Meta:
         verbose_name = 'Категория'
@@ -34,9 +41,8 @@ class ItemManager(RandomManager):
 
     def detailed_item(self, pk):
         try:
-            return self.get_queryset().filter(is_published=True, pk=pk).select_related('category').only('name',
-                                                                                                        'category__name',
-                                                                                                        'text').prefetch_related(
+            return self.get_queryset().filter(is_published=True, pk=pk).select_related('category').only(
+                'name', 'category__name', 'text').prefetch_related(
                 Prefetch('tags', queryset=Tag.objects.filter(is_published=True).only('name'))).get()
         except Item.DoesNotExist:
             raise Http404

@@ -1,18 +1,14 @@
 from django.shortcuts import render
 
-from catalog.models import Item
+from catalog.models import Item, Category
 
 
 def item_list(request):
     template = 'catalog/list.html'
-    items = Item.objects.published_tags()
-    count = items.count()
-    if not count:
-        context = {}
-    else:
-        context = {
-            'items': items
-        }
+    categories = Category.objects.categories_and_items()
+    context = {
+        'categories': categories
+    }
     return render(request, template, context)
 
 
