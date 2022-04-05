@@ -1,7 +1,3 @@
-{% for item in items %}
-  <h3>{{ item.name }}</h3>
-  <p>{{ item.text|truncatewords:10 }}</p>
-  <p>{{ item.tags.all|join:", " }}</p>
-{% empty %}
-  <p>Список пуст. Эй, админ, добавь инфы!</p>
-{% endfor %}
+<h3>{{ item.name }}</h3>
+<p>{{ item.text|truncatewords:10 }}</p>
+<p>{{ item.tags.all|join:", " }}</p>

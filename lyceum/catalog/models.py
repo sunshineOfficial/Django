@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models import Prefetch
 from django.http import Http404
-from django_random_queryset import RandomManager
 
 from catalog.validators import validate_2_words, validate_brilliant
 from core.models import NameBaseModel, PublishedBaseModel, SlugBaseModel
@@ -9,8 +8,9 @@ from core.models import NameBaseModel, PublishedBaseModel, SlugBaseModel
 
 class CategoryManager(models.Manager):
     def categories_and_items(self):
-        return self.get_queryset().filter(is_published=True).order_by('-weight').only('name').prefetch_related(
-            Prefetch('items', queryset=Item.objects.filter(is_published=True)))
+        return self.get_queryset().filter(is_published=True).only('name').prefetch_related(
+            Prefetch('items', queryset=Item.objects.filter(is_published=True))).prefetch_related(
+            Prefetch('items__tags', queryset=Tag.objects.filter(is_published=True).only('name')))
 
 
 class Category(NameBaseModel, PublishedBaseModel, SlugBaseModel):
@@ -20,6 +20,7 @@ class Category(NameBaseModel, PublishedBaseModel, SlugBaseModel):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+        ordering = ('-weight',)
 
     def __str__(self):
         return self.name[:30]
@@ -34,7 +35,7 @@ class Tag(NameBaseModel, PublishedBaseModel, SlugBaseModel):
         return self.name[:30]
 
 
-class ItemManager(RandomManager):
+class ItemManager(models.Manager):
     def published_tags(self):
         return self.get_queryset().filter(is_published=True).only('name', 'text').prefetch_related(
             Prefetch('tags', queryset=Tag.objects.filter(is_published=True).only('name')))

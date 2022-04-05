@@ -7,7 +7,7 @@
     {% if category.items.all %}
       <h2>{{ category.name }}</h2>
       {% for item in category.items.all %}
-        <p>{{ item.name }}</p>
+        {% include "includes/item_card.html" %}
       {% endfor %}
     {% endif %}
   {% empty %}
