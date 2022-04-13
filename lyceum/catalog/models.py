@@ -38,7 +38,9 @@ class Tag(NameBaseModel, PublishedBaseModel, SlugBaseModel):
 class ItemManager(models.Manager):
     def published_tags(self):
         return self.get_queryset().filter(is_published=True).only('name', 'text').prefetch_related(
-            Prefetch('tags', queryset=Tag.objects.filter(is_published=True).only('name')))
+            Prefetch('tags', queryset=Tag.objects.filter(is_published=True).only('name'))).prefetch_related(
+            Prefetch('rating')
+        )
 
     def detailed_item(self, pk):
         try:

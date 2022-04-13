@@ -6,5 +6,15 @@
   <h3>{{ item.name }}</h3>
   <h4>{{ item.category.name }}</h4>
   <p>{{ item.text }}</p>
+  <h4>{{ stars.star__avg }} звезд / оценок {{ stars.star__count }}</h4>
   <p>{{ item.tags.all|join:", " }}</p>
+  {% if user.is_authenticated %}
+    <p>Ваша оценка {{ user_star.star }}</p>
+    <form method="post">
+      {% csrf_token %}
+      <label>Выберите свое отношение</label>
+      <p>{{ form.as_p }}</p>
+      <input type="submit" value="Обновить">
+    </form>
+  {% endif %}
 {% endblock %}
