@@ -2,18 +2,26 @@
 
 {% block title %}Подробное описание товара{% endblock %}
 {% block content %}
-  <h1>Подробное описание товара {{ pk }}</h1>
-  <h3>{{ item.name }}</h3>
-  <h4>{{ item.category.name }}</h4>
-  <p>{{ item.text }}</p>
-  <h4>{{ stars.star__avg }} звезд / оценок {{ stars.star__count }}</h4>
-  <p>{{ item.tags.all|join:", " }}</p>
-  {% if user and user.is_authenticated %}
-    <p>Ваша оценка {{ user_star.star }}</p>
-    <form method="post">
-      {% csrf_token %}
-      <p>{{ form.as_p }}</p>
-      <input type="submit" value="Обновить">
-    </form>
-  {% endif %}
+  <h1 class="my-3">Подробное описание товара {{ pk }}</h1>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">{{ item.name }}</h3>
+      <h5 class="card-subtitle mb-2 text-muted">{{ item.category.name }}</h5>
+      <p class="card-text">{{ item.text }}</p>
+      <h4 class="card-text mb-2">
+        {% if stars.star__avg %}{{ stars.star__avg }}{% else %}0{% endif %} звезд / оценок {{ stars.star__count }}</h4>
+      {% for tag in item.tags.all %}
+        <span class="badge bg-secondary mb-2">{{ tag.name }}</span>
+      {% endfor %}
+      {% if user and user.is_authenticated %}
+        <h5 class="mt-2">Ваша оценка {{ user_star.star }}</h5>
+        <form method="post">
+          {% csrf_token %}
+          <h4>{{ form.stars.label }}</h4>
+          <p>{{ form.as_p }}</p>
+          <input type="submit" value="Обновить" class="btn btn-primary">
+        </form>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

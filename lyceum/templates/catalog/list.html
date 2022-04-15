@@ -2,13 +2,15 @@
 
 {% block title %}Список товаров{% endblock %}
 {% block content %}
-  <h1>Список товаров</h1>
+  <h1 class="my-3">Список товаров</h1>
   {% for category in categories %}
     {% if category.items.all %}
-      <h2>{{ category.name }}</h2>
-      {% for item in category.items.all %}
-        {% include "includes/item_card.html" %}
-      {% endfor %}
+      <h2 class="mb-3">{{ category.name }}</h2>
+      <div class="mb-3">
+        {% for item in category.items.all %}
+          {% include "includes/item_card.html" %}
+        {% endfor %}
+      </div>
     {% endif %}
   {% empty %}
     <h2>Список пуст. Эй, админ, добавь инфы!</h2>
