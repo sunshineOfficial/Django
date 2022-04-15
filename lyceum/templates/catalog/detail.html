@@ -2,7 +2,7 @@
 
 {% block title %}Подробное описание товара{% endblock %}
 {% block content %}
-  <h1 class="my-3">Подробное описание товара {{ pk }}</h1>
+  <h1 class="mb-5 mt-3">Подробное описание товара {{ pk }}</h1>
   <div class="card">
     <div class="card-body">
       <h3 class="card-title">{{ item.name }}</h3>
@@ -18,8 +18,14 @@
         <form method="post">
           {% csrf_token %}
           <h4>{{ form.stars.label }}</h4>
-          <p>{{ form.as_p }}</p>
-          <input type="submit" value="Обновить" class="btn btn-primary">
+          {% for radio in form.stars %}
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="stars" id="{{ radio.id_for_label }}"
+                     value="{{ radio.data.value }}" required>
+              <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+            </div>
+          {% endfor %}
+          <input type="submit" value="Обновить" class="btn btn-primary mt-3">
         </form>
       {% endif %}
     </div>

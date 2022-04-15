@@ -2,8 +2,7 @@
 
 {% block title %}Главная{% endblock %}
 {% block content %}
-  <h1 class="my-3">Главная страница</h1>
-  <h3 class="mb-3"><a href="{% url 'admin:index' %}">Админка</a></h3>
+  <h1 class="mb-5 mt-3">Главная страница</h1>
 
   {% for item in items %}
     {% include "includes/item_card.html" %}
