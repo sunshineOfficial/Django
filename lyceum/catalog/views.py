@@ -25,7 +25,10 @@ def item_detail(request, pk):
     stars = Rating.objects.filter(item=item, star__in=list(
         filter(lambda x: x != 0, map(lambda y: y[0], Rating.RATING_CHOICES)))).aggregate(Avg('star'), Count('star'))
     user = User.objects.filter(username=request.user.username).first()
-    user_star = Rating.objects.get_or_create(user_id=user.id, item=item)[0]
+    if user:
+        user_star, _ = Rating.objects.get_or_create(user_id=user.id, item=item)
+    else:
+        user_star = None
     form = RatingUpdateForm(request.POST or None)
     if form.is_valid():
         user_star.star = form.cleaned_data['stars']
