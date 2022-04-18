@@ -13,8 +13,10 @@ class RatingUpdateForm(forms.Form):
 def item_list(request):
     template = 'catalog/list.html'
     categories = Category.objects.categories_and_items()
+    user = User.objects.filter(username=request.user.username).first()
     context = {
-        'categories': categories
+        'categories': categories,
+        'user': user
     }
     return render(request, template, context)
 
@@ -26,7 +28,7 @@ def item_detail(request, pk):
         filter(lambda x: x != 0, map(lambda y: y[0], Rating.RATING_CHOICES)))).aggregate(Avg('star'), Count('star'))
     user = User.objects.filter(username=request.user.username).first()
     if user:
-        user_star, _ = Rating.objects.get_or_create(user_id=user.id, item=item)
+        user_star, _ = Rating.objects.get_or_create(user=user, item=item)
     else:
         user_star = None
     form = RatingUpdateForm(request.POST or None)
@@ -35,7 +37,6 @@ def item_detail(request, pk):
         user_star.save()
         return redirect('item_detail', pk)
     context = {
-        'pk': pk,
         'item': item,
         'stars': stars,
         'user': user,

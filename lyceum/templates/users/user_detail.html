@@ -2,5 +2,29 @@
 
 {% block title %}Информация о пользователе{% endblock %}
 {% block content %}
-  <h1 class="mb-5 mt-3">Информация о пользователе {{ pk }}</h1>
+  <h1 class="mb-5 mt-3">Информация о пользователе</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">{{ d_user.username }}</h2>
+      {% if d_user.email %}
+        <h5 class="card-text">{{ d_user.email }}</h5>
+      {% endif %}
+      {% if d_user.first_name and d_user.last_name %}
+        <h5 class="card-text">{{ d_user.first_name }} {{ d_user.last_name }}</h5>
+      {% endif %}
+      {% if d_user.profile.birthday %}
+        <p class="card-text">{{ d_user.profile.birthday }}</p>
+      {% endif %}
+      {% if d_user.rating.all %}
+        <h4 class="card-text">Любимые товары:</h4>
+        <div class="list-group">
+          {% for rating in d_user.rating.all %}
+            <a href="{% url 'item_detail' rating.item.pk %}"
+               class="list-group-item list-group-item-action">{{ rating.item.name }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
