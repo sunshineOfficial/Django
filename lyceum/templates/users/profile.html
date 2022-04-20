@@ -21,24 +21,19 @@
     {{ user_form.errors }}
     {{ profile_form.errors }}
 
-    <div class="mb-3">
-      <label for="{{ user_form.email.id_for_label }}" class="form-label">{{ user_form.email.label }}</label>
-      <input type="email" class="form-control" id="{{ user_form.email.id_for_label }}" name="email" maxlength="254"
-             value="{{ user.email }}">
-    </div>
+    {% for field in user_form %}
+      <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {{ field }}
+      </div>
+    {% endfor %}
 
-    <div class="mb-3">
-      <label for="{{ user_form.username.id_for_label }}" class="form-label">{{ user_form.username.label }}</label>
-      <input type="text" class="form-control" id="{{ user_form.username.id_for_label }}" name="username" maxlength="150"
-             required value="{{ user.username }}">
-      <div id="usernameHelp" class="form-text">{{ user_form.username.help_text|safe }}</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="{{ profile_form.birthday.id_for_label }}" class="form-label">{{ profile_form.birthday.label }}</label>
-      <input type="date" class="form-control" id="{{ profile_form.birthday.id_for_label }}" name="birthday"
-             value="{{ user.profile.birthday|date:'Y-m-d' }}">
-    </div>
+    {% for field in profile_form %}
+      <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {{ field }}
+      </div>
+    {% endfor %}
 
     <input type="submit" class="btn btn-primary mb-3" value="Сохранить">
   </form>

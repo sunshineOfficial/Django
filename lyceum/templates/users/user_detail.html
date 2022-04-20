@@ -6,20 +6,20 @@
 
   <div class="card">
     <div class="card-body">
-      <h2 class="card-title">{{ d_user.username }}</h2>
+      <h2 class="card-title">{{ detailed_user.username }}</h2>
       {% if d_user.email %}
-        <h5 class="card-text">{{ d_user.email }}</h5>
+        <h5 class="card-text">{{ detailed_user.email }}</h5>
       {% endif %}
-      {% if d_user.first_name and d_user.last_name %}
-        <h5 class="card-text">{{ d_user.first_name }} {{ d_user.last_name }}</h5>
+      {% if detailed_user.first_name and detailed_user.last_name %}
+        <h5 class="card-text">{{ detailed_user.first_name }} {{ detailed_user.last_name }}</h5>
       {% endif %}
-      {% if d_user.profile.birthday %}
-        <p class="card-text">{{ d_user.profile.birthday }}</p>
+      {% if detailed_user.profile.birthday %}
+        <p class="card-text">{{ detailed_user.profile.birthday }}</p>
       {% endif %}
-      {% if d_user.rating.all %}
+      {% if detailed_user.rating.all %}
         <h4 class="card-text">Любимые товары:</h4>
         <div class="list-group">
-          {% for rating in d_user.rating.all %}
+          {% for rating in detailed_user.rating.all %}
             <a href="{% url 'item_detail' rating.item.pk %}"
                class="list-group-item list-group-item-action">{{ rating.item.name }}</a>
           {% endfor %}
