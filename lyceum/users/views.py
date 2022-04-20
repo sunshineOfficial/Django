@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect
@@ -25,7 +25,7 @@ def user_detail(request, pk):
     context = {
         'pk': pk,
         'user': request.user,
-        'd_user': detailed_user
+        'detailed_user': detailed_user
     }
     return render(request, template, context)
 
@@ -34,9 +34,8 @@ def signup(request):
     template = 'users/signup.html'
     form = BeautifulUserCreationForm(request.POST or None)
     if form.is_valid():
-        form.save()
-        new_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-        login(request, new_user)
+        user = form.save()
+        login(request, user)
         return redirect('profile')
     context = {
         'user': request.user,

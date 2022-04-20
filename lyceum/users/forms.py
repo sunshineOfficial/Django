@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm, UsernameField, SetPasswordForm, \
-    PasswordResetForm, UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm, SetPasswordForm, PasswordResetForm, \
+    UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 from rating.models import User
@@ -54,7 +54,11 @@ class BeautifulAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(BeautifulAuthenticationForm, self).__init__(*args, **kwargs)
 
-    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'}))
+    username = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={'autocomplete': 'email', 'class': 'form-control'})
+    )
     password = forms.CharField(
         label=_("Password"),
         strip=False,
@@ -94,8 +98,11 @@ class BeautifulUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(BeautifulUserCreationForm, self).__init__(*args, **kwargs)
 
-    username = UsernameField(label='Имя пользователя',
-                             widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'}))
+    username = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={'autocomplete': 'email', 'class': 'form-control'})
+    )
     password1 = forms.CharField(
         label=_("Password"),
         strip=False,
