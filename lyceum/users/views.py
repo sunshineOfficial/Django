@@ -35,7 +35,7 @@ def signup(request):
     form = BeautifulUserCreationForm(request.POST or None)
     if form.is_valid():
         user = form.save()
-        login(request, user)
+        login(request, user, backend='users.backends.EmailBackend')
         return redirect('profile')
     context = {
         'user': request.user,
